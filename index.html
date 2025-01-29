@@ -6,85 +6,98 @@
     <title>API REST Clientes</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
             color: #333;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
         h1, h2 {
-            color: #444;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #f8f8f8;
+            background-color: #f1f1f1;
         }
         button {
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
         .form-group {
             margin-bottom: 15px;
         }
         input[type="text"], input[type="email"] {
-            width: calc(100% - 22px);
-            padding: 10px;
+            width: calc(100% - 24px);
+            padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
             box-sizing: border-box;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            width: 48%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Clientes</h1>
-        <div>
-            <h2>Crear Cliente</h2>
-            <div class="form-group">
-                <input type="text" id="nombre" placeholder="Nombre">
+        <h1>Gestión de Clientes</h1>
+        <div class="actions">
+            <div class="form-container">
+                <h2>Crear Cliente</h2>
+                <div class="form-group">
+                    <input type="text" id="nombre" placeholder="Nombre">
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email">
+                </div>
+                <button onclick="crearCliente()">Crear</button>
             </div>
-            <div class="form-group">
-                <input type="email" id="email" placeholder="Email">
+            <div class="form-container">
+                <h2>Actualizar Cliente</h2>
+                <div class="form-group">
+                    <input type="text" id="update-id" placeholder="ID">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="update-nombre" placeholder="Nuevo Nombre">
+                </div>
+                <div class="form-group">
+                    <input type="email" id="update-email" placeholder="Nuevo Email">
+                </div>
+                <button onclick="actualizarCliente()">Actualizar</button>
             </div>
-            <button onclick="crearCliente()">Crear</button>
-        </div>
-        <div>
-            <h2>Actualizar Cliente</h2>
-            <div class="form-group">
-                <input type="text" id="update-id" placeholder="ID">
-            </div>
-            <div class="form-group">
-                <input type="text" id="update-nombre" placeholder="Nuevo Nombre">
-            </div>
-            <div class="form-group">
-                <input type="email" id="update-email" placeholder="Nuevo Email">
-            </div>
-            <button onclick="actualizarCliente()">Actualizar</button>
         </div>
         <table>
             <thead>

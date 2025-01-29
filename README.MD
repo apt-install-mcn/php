@@ -30,12 +30,13 @@ Este proyecto es una API REST simple para gestionar clientes, implementada en PH
 ## Uso
 
 1. Abre `index.html` en tu navegador: `http://localhost:8000/index.html`.
-2. Usa la interfaz para crear, ver y eliminar clientes.
+2. Usa la interfaz para crear, ver, actualizar y eliminar clientes.
 
 ## Endpoints
 
 - **GET** `/api-rest/get_all_client.php`: Obtiene todos los clientes.
 - **POST** `/api-rest/create_client.php`: Crea un nuevo cliente.
+- **PUT** `/api-rest/update_client.php`: Actualiza un cliente existente.
 - **DELETE** `/api-rest/delete_client.php`: Elimina un cliente.
 
 ## Autenticación
