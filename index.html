@@ -5,12 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API REST Clientes</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 0 auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-        button { background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer; }
-        .form-group { margin-bottom: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="email"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -25,6 +72,19 @@
                 <input type="email" id="email" placeholder="Email">
             </div>
             <button onclick="crearCliente()">Crear</button>
+        </div>
+        <div>
+            <h2>Actualizar Cliente</h2>
+            <div class="form-group">
+                <input type="text" id="update-id" placeholder="ID">
+            </div>
+            <div class="form-group">
+                <input type="text" id="update-nombre" placeholder="Nuevo Nombre">
+            </div>
+            <div class="form-group">
+                <input type="email" id="update-email" placeholder="Nuevo Email">
+            </div>
+            <button onclick="actualizarCliente()">Actualizar</button>
         </div>
         <table>
             <thead>
@@ -52,6 +112,27 @@
                     'Authorization': 'Basic ' + btoa('admin:password123')
                 },
                 body: JSON.stringify({ nombre: nombre, email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                location.reload(); // Recargar la página para actualizar la lista
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function actualizarCliente() {
+            const id = document.getElementById('update-id').value;
+            const nombre = document.getElementById('update-nombre').value;
+            const email = document.getElementById('update-email').value;
+
+            fetch('api-rest/update_client.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('admin:password123')
+                },
+                body: JSON.stringify({ id: id, nombre: nombre, email: email })
             })
             .then(response => response.json())
             .then(data => {
