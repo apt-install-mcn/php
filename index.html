@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API REST Clientes</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        button { background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+        .form-group { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clientes</h1>
+        <div>
+            <h2>Crear Cliente</h2>
+            <div class="form-group">
+                <input type="text" id="nombre" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email">
+            </div>
+            <button onclick="crearCliente()">Crear</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="clientes">
+                <!-- Aquí se insertarán los clientes -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function crearCliente() {
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+
+            fetch('api-rest/create_client.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('admin:password123')
+                },
+                body: JSON.stringify({ nombre: nombre, email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                location.reload(); // Recargar la página para actualizar la lista
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function eliminarCliente(id) {
+            fetch('api-rest/delete_client.php', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa('admin:password123')
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                location.reload(); // Recargar la página para actualizar la lista
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        fetch('api-rest/get_all_client.php', {
+            headers: {
+                'Authorization': 'Basic ' + btoa('admin:password123')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const clientes = document.getElementById('clientes');
+            data.forEach(cliente => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${cliente.id}</td><td>${cliente.nombre}</td><td>${cliente.email}</td>
+                                 <td><button onclick="eliminarCliente(${cliente.id})">Eliminar</button></td>`;
+                clientes.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
